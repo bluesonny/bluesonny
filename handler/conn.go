@@ -49,8 +49,9 @@ func (c *Connection) Reader(h User) {
 			break
 		}
 		json.Unmarshal(message, &c.data)
-		//log.Printf("用户结构%+v\n", c.data)
+
 		log.Printf("读到消息内容%+v\n", string(message))
+		log.Printf("读取消息后的用户结构%+v\n", c.data)
 		//解析信息类型
 		switch c.data.Type {
 		//用户登录
@@ -68,6 +69,7 @@ func (c *Connection) Reader(h User) {
 		case "user":
 			c.data.Type = "user"
 			data_b, _ := json.Marshal(c.data)
+			log.Printf("发送到h.b")
 			h.b <- data_b
 		//用户登出
 		case "logout":
